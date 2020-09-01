@@ -8,16 +8,16 @@ const scroll = () =>
 
 let lastHeight = -1
 const allLinks = new Set()
-const refreshId = setInterval(function() {
-  getLinks()
-    .forEach(link => allLinks.add(link))
-  scroll()
-  if (document.documentElement.scrollTop === lastHeight) {
-    clearInterval(refreshId)
-  }
-  lastHeight = document.documentElement.scrollTop
-}, 300) // TODO: get right amount of time
 
-// run this after
-
-copy([...allLinks])
+with ({ copy }) {
+  const refreshId = setInterval(function() {
+    getLinks()
+      .forEach(link => allLinks.add(link))
+    scroll()
+    if (document.documentElement.scrollTop === lastHeight) {
+      clearInterval(refreshId)
+      copy([...allLinks])
+    }
+    lastHeight = document.documentElement.scrollTop
+  }, 300) // TODO: get right amount of time
+}
